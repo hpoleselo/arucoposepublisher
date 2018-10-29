@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- If we wanted to use this urdf as a xacro, then we would substitute for this line below -->
+<!-- <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda"> -->
+<robot name="panda">
+
+  <!--
+  <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
+  <xacro:hand ns="panda" rpy="0 0 ${-pi/4}" connected_to="panda_link8"/>
+  -->
+
+  <!-- Creating our world frame -->
+  <link name="world" />
+  
+  <joint name="world_table_j" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="world"/>
+    <child link="table" />
+  </joint>  
+
+  
+  <link name="table">
+    <visual>
+      <geometry>
+        <mesh filename="package://henrique/meshes/plate.dae" scale="1 1 1"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Sempre pra rotacionar uma peca, usamos a joint, o que faz sentido pois a joint eh o que guarda a relacao entre duas links -->
+  <joint name="table_plate_j" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="table"/>
+    <child link="plate" />
+  </joint>  
+  
+
+  <link name="plate">
+    <visual>
+      <geometry>
+        <mesh filename="package://henrique/meshes/table.dae" scale="1 1 1"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  
+  <!-- Ai man, se eu nao tivesse a "instanciacao" do xacro do panda_arm com o plate, eu precisaria adicionar uma relacao entre meu robo e o mundo
+  e eu faria isso criando essa joint world_panda.
+  -->
+ 
+  <!--
+  <joint name="world_panda" type="fixed">
+    <origin xyz="0.51 ${0.85+0.025} 0.12" rpy="${3/2*pi} 0 0" />
+    <parent link="world"/>
+    <child link="panda_link0" />
+  </joint>  
+    
+  -->
+  <!-- Variation on rotation and translation doesnt make a diff here -->
+  <!-- <xacro:panda_arm xyz="0 0 0 " rpy="${pi/2} ${pi/2} ${pi/2}" connected_to="plate"/> -->
+  
+ 
+
+</robot>

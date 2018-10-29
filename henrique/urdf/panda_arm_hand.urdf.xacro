@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
+  <xacro:hand ns="panda" rpy="0 0 ${-pi/4}" connected_to="panda_link8"/>
+
+  <!-- Creating our world frame -->
+  <link name="world" xyz="0 0 0" />
+
+  <!-- Connecting table to the world frame -->
+  <joint name="world_table_j" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="world"/>
+    <child link="table" />
+  </joint>
+
+  <link name="table">
+    <visual>
+      <geometry>
+        <mesh filename="package://franka_description/meshes/visual/table.dae" scale="1 1 1"/> 
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Connecting the plate to the table -->
+  <joint name="table_plate_j" type="fixed">
+    <origin xyz="0.24 0.35 0.9" rpy="0 0 ${pi/2}" />
+    <parent link="table"/>
+    <child link="plate" />
+  </joint>  
+  
+  <!-- The values for the translation are measured, but notice that the plate has 1cm more than in real life, so when viewing the pose we have to consider that... -->
+  <link name="plate">
+    <visual>
+      <geometry>
+        <mesh filename="package://franka_description/meshes/visual/plate.dae" scale="1 1 1"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+      </geometry>
+    </visual>
+  </link>
+  
+  <!-- Connecting the panda to the created environment -->
+  <xacro:panda_arm xyz="0.155 0.12 0.025" rpy="0 0 0" connected_to="plate"/>
+
+  <!-- Adding a frame to the camera -->
+  <joint name="link8_camera" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="panda_link8"/>
+    <child link="camera" />
+  </joint>  
+
+  <link name="camera"> 
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+  </link>
+  
+</robot>
