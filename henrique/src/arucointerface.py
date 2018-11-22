@@ -1,7 +1,10 @@
+import sys
+import os
 import numpy as np
 import cv2
 import glob
 import cv2.aruco as aruco
+from pynput import keyboard
 
 # Marker Size: 10cm, meaning the whole square (considering the black border is 10cm)
 # The _50, 100, 250 or 1000 in the Dictionary are the markers possibilities, meaning the ID can go from 0 to 249, if it's 250.
@@ -166,7 +169,6 @@ class ArucoInterface(object):
         criteria = self.criteria
         marker_size = self.marker_size
 
-
         # Get video stream from camera source
         cap = cv2.VideoCapture(1)
         # Getting the calibrated parameters
@@ -213,7 +215,7 @@ class ArucoInterface(object):
             cv2.imshow('ArucoDetection', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
+        # Maybe add a method that exits and we can call it on the main method 
         cap.release()
         cv2.destroyAllWindows()
         _rvec = np.copy(rvec)
@@ -227,4 +229,13 @@ def main():
     # So we have our camera matrix and distortion coefficients
     #arucao.calibrate_camera()
     arucao.track_aruco()
-main()
+
+if __name__ == '__main__':
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('Interrupted')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
