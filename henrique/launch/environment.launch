@@ -1,0 +1,13 @@
+<launch>
+    <!-- Adds our URDF file to RVIZ -->
+    <param name="robot_description" textfile="/home/ricky/catkin_ws/src/henrique/urdf/environment.urdf" />
+    <node pkg="rviz" type="rviz" name="environment" args="/home/ricky/catkin_ws/src/henrique/rviz/rviz_config.rviz"/>
+    <!--
+    <node pkg="panda_ptp" type="arucao_vai_funcionar_ros.py" name="VideoStreamSubscriber" cwd="node"/>
+    <node pkg="panda_ptp" type="tfbroadcaster.py" name="TfBroadcaster" />
+    <node pkg="panda_ptp" type="transformpose.py" name="TransformPoseFromMarker" output="screen"/>
+    -->
+</launch>
+
+
+

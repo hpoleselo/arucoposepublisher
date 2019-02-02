@@ -1,0 +1,19 @@
+<robot>
+  <link name="map" xyz="0 0 0" />
+    
+    <joint name="world_camera_j" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="map"/>
+      <child link="camera" />
+    </joint>  
+
+    <!-- Connecting table to the world frame -->
+    <link name="camera">
+      <visual>
+        <geometry>
+          <!-- mesh filename="package://franka_description/meshes/visual/table.dae" scale="1 1 1"/--> 
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+        </geometry>
+      </visual>
+  </link>
+</robot>
