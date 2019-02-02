@@ -105,7 +105,7 @@ class ArucoInterface(object):
         images = glob.glob(load_image)
 
         #print "rodou 1"
-        for fname in images:
+        for fname in images:#print "rodou 2"
             img = cv2.imread(fname)
             gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
@@ -121,13 +121,11 @@ class ArucoInterface(object):
 
                 # Draw and display the corners
                 img = cv2.drawChessboardCorners(img, (chessb_col,chessb_row), corners2,ret)
-            #print "rodou 2"
 
         ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1],None,None)
         # Function to draw the axis
 
         def draw(img, corners, imgpts):
-            #print "rodou3"
             corner = tuple(corners[0].ravel())
             img = cv2.line(img, corner, tuple(imgpts[0].ravel()), (255, 0, 0), 5)
             img = cv2.line(img, corner, tuple(imgpts[1].ravel()), (0, 255, 0), 5)
@@ -173,7 +171,7 @@ class ArucoInterface(object):
         cap = cv2.VideoCapture(1)
         # Getting the calibrated parameters
         camera_matrix, dist_matrix = self.extract_calibration()
-
+        
         while (True):
             # Getting a frame from video stream
             ret, frame = cap.read()
