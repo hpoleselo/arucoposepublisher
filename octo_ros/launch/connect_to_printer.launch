@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="octoROS" type="octoROS.py" name="printerWatcher"/>
+</launch>
